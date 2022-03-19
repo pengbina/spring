@@ -371,7 +371,9 @@ public class MapperScannerConfigurer
     if (StringUtils.hasText(defaultScope)) {
       scanner.setDefaultScope(defaultScope);
     }
+    //根据配置属性生成过滤器
     scanner.registerFilters();
+    //扫描java文件
     scanner.scan(
         StringUtils.tokenizeToStringArray(this.basePackage, ConfigurableApplicationContext.CONFIG_LOCATION_DELIMITERS));
   }
@@ -381,6 +383,9 @@ public class MapperScannerConfigurer
    * PropertyResourceConfigurers will not have been loaded and any property substitution of this class' properties will
    * fail. To avoid this, find any PropertyResourceConfigurers defined in the context and run them on this class' bean
    * definition. Then update the values.
+   *
+   * 1.找到所有已经注册的PropertyResourceConfigurer类型的bean
+   * 2.模拟Spring中的环境来用处理器。
    */
   private void processPropertyPlaceHolders() {
     Map<String, PropertyResourceConfigurer> prcs = applicationContext.getBeansOfType(PropertyResourceConfigurer.class,

@@ -50,6 +50,9 @@ import org.springframework.beans.factory.FactoryBean;
  * @author Eduardo Macarron
  *
  * @see SqlSessionTemplate
+ *
+ * 因为实现了InitializingBean接口，Spring会保证在本初始化时首先调用afterPropertiesSet方法来完成其
+ * 初始化逻辑，追踪父类，发现afterPropertiesSet方法是在DaoSupport类中实现。
  */
 public class MapperFactoryBean<T> extends SqlSessionDaoSupport implements FactoryBean<T> {
 

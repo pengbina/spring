@@ -167,12 +167,14 @@ public class ClassPathMapperScanner extends ClassPathBeanDefinitionScanner {
   public void registerFilters() {
     boolean acceptAllInterfaces = true;
 
+    //对于annotationClass属性的处理
     // if specified, use the given annotation and / or marker interface
     if (this.annotationClass != null) {
       addIncludeFilter(new AnnotationTypeFilter(this.annotationClass));
       acceptAllInterfaces = false;
     }
 
+    //对于markerInterface属性的处理
     // override AssignableTypeFilter to ignore matches on the actual marker interface
     if (this.markerInterface != null) {
       addIncludeFilter(new AssignableTypeFilter(this.markerInterface) {
@@ -189,6 +191,7 @@ public class ClassPathMapperScanner extends ClassPathBeanDefinitionScanner {
       addIncludeFilter((metadataReader, metadataReaderFactory) -> true);
     }
 
+    //不扫描package-info.java文件
     // exclude package-info.java
     addExcludeFilter((metadataReader, metadataReaderFactory) -> {
       String className = metadataReader.getClassMetadata().getClassName();
@@ -205,6 +208,7 @@ public class ClassPathMapperScanner extends ClassPathBeanDefinitionScanner {
     Set<BeanDefinitionHolder> beanDefinitions = super.doScan(basePackages);
 
     if (beanDefinitions.isEmpty()) {
+      //如果没有扫描到任何文件发出警告
       LOGGER.warn(() -> "No MyBatis mapper was found in '" + Arrays.toString(basePackages)
           + "' package. Please check your configuration.");
     } else {
@@ -236,6 +240,7 @@ public class ClassPathMapperScanner extends ClassPathBeanDefinitionScanner {
       definition.getConstructorArgumentValues().addGenericArgumentValue(beanClassName); // issue #59
       try {
         // for spring-native
+        //开始构造MapperFactoryBean类型的bean
         definition.getPropertyValues().add("mapperInterface", Resources.classForName(beanClassName));
       } catch (ClassNotFoundException ignore) {
         // ignore

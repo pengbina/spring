@@ -18,7 +18,7 @@
 -->
 <!--
     A sample context that shows how to integrate MyBatis with Spring using
-    MapperScannerConfigurer. With this configuration, DAOs are created
+    . With this configuration, DAOs are created
     automatically by the scanner and do not have to be explicitly defined.
 
 -->

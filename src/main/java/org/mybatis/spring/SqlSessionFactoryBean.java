@@ -85,6 +85,9 @@ import org.springframework.util.ClassUtils;
  *
  * @see #setConfigLocation
  * @see #setDataSource
+ *
+ * InitializingBean:实现此接口的bean会在初始化时调用其afterPropertiesSet方法来进行bean的逻辑初始化。
+ * FactoryBean:一旦某个bean实现此接口，那么通过getBean方法获取bean时其实是获取此类的getObject()返回的实例。
  */
 public class SqlSessionFactoryBean
     implements FactoryBean<SqlSessionFactory>, InitializingBean, ApplicationListener<ApplicationEvent> {
@@ -501,6 +504,11 @@ public class SqlSessionFactoryBean
    * @return SqlSessionFactory
    * @throws Exception
    *           if configuration is failed
+   *
+   * 从函数中可以看到，完全可以取消配置中的configLocation属性，而把其中的属性直接写在SqlSessionFactoryBean中。
+   *
+   *
+   *
    */
   protected SqlSessionFactory buildSqlSessionFactory() throws Exception {
 

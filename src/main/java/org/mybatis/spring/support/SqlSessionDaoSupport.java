@@ -35,6 +35,12 @@ import org.springframework.dao.support.DaoSupport;
  * @see #setSqlSessionFactory
  * @see #setSqlSessionTemplate
  * @see SqlSessionTemplate
+ *
+ * 对应DAO配置的验证，Spring做了以下几方面工作：
+ * 1.父类中对于sqlSession不为空的验证
+ * 2.映射接口的验证
+ * 3.映射文件存在性验证
+ *
  */
 public abstract class SqlSessionDaoSupport extends DaoSupport {
 
